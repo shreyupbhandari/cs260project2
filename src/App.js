@@ -1,15 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
+import './table.css'
 
-function TableRow({grantData})
+function TableRow({grantData,index})
 {
-
+  
   return (
     <>
-    <tr>
-      <td> {grantData.ProjectTitle}</td>
-      <td> {grantData.Institution}</td>
+    <tr key={grantData["@AppNumber"]}>
+      <td>{index+1}</td>
+      <td>{grantData.ProjectTitle}</td>
+      <td>{grantData.Institution}</td>
+      <td>{grantData.Program}</td>
+      <td>{grantData.InstCity}</td>
+      <td>{grantData.PrimaryDiscipline}</td>
     </tr>
     </>
   );
@@ -18,13 +23,29 @@ function TableRow({grantData})
 
 function Table({grantArray})
 {
-  return(<table>
-    <tr>
-      <th>Project Title</th>
-      <th>Institution</th>
-    </tr>
-    {grantArray.map(data=>(<TableRow grantData={data}></TableRow>))}
-  </table>);
+
+  return(
+    <>
+      
+        <title>Grant Table</title>
+        <table>
+          <thead className="Header">
+            <tr>
+              <th>SN</th>
+              <th>Project Title</th>
+              <th>Institution</th>
+              <th>Program</th>
+              <th>State</th>
+              <th>Project Discipline</th>
+            </tr>
+          </thead>
+          <tbody className="Body">
+          {grantArray.map((data,index)=>(<TableRow grantData={data} index={index}></TableRow>))}
+          </tbody>
+        </table>
+      
+  </>
+  );
 
 }
 
