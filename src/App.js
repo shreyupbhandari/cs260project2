@@ -12,7 +12,7 @@ function TableRow({grantData,index})
       <td>{index+1}</td>
       <td>{grantData.ProjectTitle}</td>
       <td>{grantData.Institution}</td>
-      <td>{grantData.Program}</td>
+      <td className={grantData.Program}>{grantData.Program}</td>
       <td>{grantData.InstCity}</td>
       <td>{grantData.PrimaryDiscipline}</td>
     </tr>
