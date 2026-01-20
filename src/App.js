@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import './table.css'
 
 function TableRow({grantData,index})
@@ -50,11 +50,11 @@ function Table({grantArray})
 
 }
 
-
-
 function App() {
   const [Grant, setGrant]=useState([]);
-  const [search, setSearch] = useState("");
+  const [filterState, setfilterState] = useState("ALL");
+  const [searchText,setSearchText]= useState("");
+
 
   useEffect(()=>{
     async function fetchGrant() {
@@ -65,19 +65,32 @@ function App() {
     }
    fetchGrant();
   },[])
-  const filteredGrants = Grant.filter(grant =>
-  grant.InstState
-    ?.toLowerCase()
-    .includes(search.toLowerCase())
-);
-  return (<>
-    <input
-      placeholder="Filter by state (e.g. CA, NY)"
-      value={search}
-      onChange={e => setSearch(e.target.value)}
-    />
+  let interactiveData=[...Grant]
+  const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
 
-    <Table grantArray={filteredGrants}/>
+  //Check for the filters through the drop down.
+  if (filterState !== "ALL") 
+    {
+    interactiveData= Grant.filter(data => data.InstState === filterState)
+    }
+    if (searchText.trim() !== "") {
+    interactiveData = Grant.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
+}
+
+  return (<>
+    <select
+      value={filterState}
+      onChange={event => setfilterState(event.target.value)}>
+      {states.map(state => <option key={state} value={state}>{state}</option>)}
+    </select>
+
+    <input
+      placeholder="Search University"
+      value={searchText}
+      onChange={event => setSearchText(event.target.value)}/>
+
+
+    <Table grantArray={interactiveData}/>
       </>
 
   );
