@@ -25,6 +25,7 @@ function Table({grantArray})
 {
 
   return(
+
     <>
       
         <title>Grant Table</title>
@@ -41,6 +42,7 @@ function Table({grantArray})
           </thead>
           <tbody className="Body">
           {grantArray.map((data,index)=>(<TableRow grantData={data} index={index}></TableRow>))}
+          {console.log(grantArray)}
           </tbody>
         </table>
       
