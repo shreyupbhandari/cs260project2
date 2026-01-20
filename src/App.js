@@ -13,7 +13,7 @@ function TableRow({grantData,index})
       <td>{grantData.ProjectTitle}</td>
       <td>{grantData.Institution}</td>
       <td className={grantData.Program}>{grantData.Program}</td>
-      <td>{grantData.InstCity}</td>
+      <td>{grantData.InstState}</td>
       <td>{grantData.PrimaryDiscipline}</td>
     </tr>
     </>
@@ -27,7 +27,6 @@ function Table({grantArray})
   return(
 
     <>
-      
         <title>Grant Table</title>
         <table>
           <thead className="Header">
@@ -55,6 +54,8 @@ function Table({grantArray})
 
 function App() {
   const [Grant, setGrant]=useState([]);
+  const [search, setSearch] = useState("");
+
   useEffect(()=>{
     async function fetchGrant() {
       const url="/NEH2020sGrant_Short.json";
@@ -64,12 +65,20 @@ function App() {
     }
    fetchGrant();
   },[])
-  
-    
+  const filteredGrants = Grant.filter(grant =>
+  grant.InstState
+    ?.toLowerCase()
+    .includes(search.toLowerCase())
+);
+  return (<>
+    <input
+      placeholder="Filter by state (e.g. CA, NY)"
+      value={search}
+      onChange={e => setSearch(e.target.value)}
+    />
 
-  return (
-    
-    <Table grantArray={Grant}/>
+    <Table grantArray={filteredGrants}/>
+      </>
 
   );
 }
