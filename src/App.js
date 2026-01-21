@@ -66,11 +66,11 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
 
 function App() {
   const [Grant, setGrant]=useState([]);
-  const [filterState, setfilterState] = useState("ALL");
+  const [filterState, setfilterState] = useState("-- State --");
   const [searchText,setSearchText]= useState("");
   const [sortDirection, setSortDirection] = useState(null);
   const [sortDirectionYear,setSortDirectionYear]= useState(null);
-  const [filterPrograms, setfilterPrograms] = useState("ALL");
+  const [filterPrograms, setfilterPrograms] = useState("-- Select Program --");
 
   useEffect(()=>{
     async function fetchGrant() {
@@ -87,16 +87,16 @@ function App() {
   function toggleYearSort()
    {setSortDirectionYear(prev =>  prev === "asc" ? "desc" : prev === "desc" ? null : "asc");}
   //To create dropdown options for states; the set function ensures that there are no duplicates
-  const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
-  const programs= ["ALL",...new Set((Grant.map(grant => grant.Program)))];
+  const states= ["-- State --",...new Set((Grant.map(grant => grant.InstState)))];
+  const programs= ["-- Select Program --",...new Set((Grant.map(grant => grant.Program)))];
 
   //Check for the filters through the drop down.
-  if (filterState !== "ALL") 
+  if (filterState !== "-- State --")
     {
     interactiveData= interactiveData.filter(data => data.InstState === filterState)
     };
   //Check for the program filter through the drop down.
-  if (filterPrograms !== "ALL") 
+  if (filterPrograms !== "-- Select Program --") 
     {
     interactiveData= interactiveData.filter(data => data.Program === filterPrograms)
     }
