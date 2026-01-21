@@ -157,7 +157,7 @@ function App() {
   <div className="controls">
     
     <input
-      placeholder="Search University"
+      placeholder="Search Insitution"
       value={searchText}
       onChange={event => setSearchText(event.target.value)}/>
 
