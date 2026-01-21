@@ -15,13 +15,14 @@ function TableRow({grantData,index})
       <td className={grantData.Program}>{grantData.Program}</td>
       <td>{grantData.InstState}</td>
       <td>{grantData.PrimaryDiscipline}</td>
+      <td>{grantData.YearAwarded}</td>
     </tr>
     </>
   );
 
 }
 
-function Table({grantArray,sortDirection,onSort})
+function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
 {
 
   return(
@@ -42,6 +43,12 @@ function Table({grantArray,sortDirection,onSort})
               <th>Program</th>
               <th>State</th>
               <th>Project Discipline</th>
+              <th className="sortable" onClick ={onYearSort}><span>Year</span>
+              <span className="sort-icon">
+                {sortDirectionYear === "asc" && "▲"}
+                {sortDirectionYear === "desc" && "▼"}
+              </span>
+              </th>
             </tr>
           </thead>
           <tbody className="Body">
@@ -60,6 +67,7 @@ function App() {
   const [filterState, setfilterState] = useState("ALL");
   const [searchText,setSearchText]= useState("");
   const [sortDirection, setSortDirection] = useState(null);
+  const [sortDirectionYear,setSortDirectionYear]= useState(null);
 
   useEffect(()=>{
     async function fetchGrant() {
@@ -74,6 +82,9 @@ function App() {
   function toggleProjectTitleSort()
    {setSortDirection(prev => 
     prev === "asc" ? "desc" : "asc");}
+  function toggleYearSort()
+   {setSortDirectionYear(prev => 
+    prev === "asc" ? "desc" : "asc");}
   //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
 
@@ -86,7 +97,7 @@ function App() {
     if (searchText.trim() !== "") {
     interactiveData = interactiveData.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
     }
-  //Sorting
+  //Sorting based on project title
     interactiveData = [...interactiveData].sort((a, b) => {
   if (!sortDirection) 
     {return 0;} //If no sort direction is specified, do not sort
@@ -109,7 +120,31 @@ function App() {
       else
         {return 0;}
     }
-});
+    });
+
+  interactiveData = [...interactiveData].sort((a, b) => {
+  if (!sortDirectionYear) 
+    {return 0;} //If no sort direction is specified, do not sort
+
+  else if (sortDirectionYear === "asc") {
+    if (a.YearAwarded < b.YearAwarded) 
+      {return -1;}
+    if (a.YearAwarded > b.YearAwarded) 
+      {return 1;}
+    else
+      {return 0;}
+      // Ascending order
+  }
+  else if (sortDirectionYear==="desc") // Descending order
+    {
+      if (a.YearAwarded < b.YearAwarded) 
+        {return 1;}
+      if (a.YearAwarded > b.YearAwarded) 
+        {return -1;}
+      else
+        {return 0;}
+    }
+    });
 
   return (<>
   <div className="controls">
@@ -125,7 +160,7 @@ function App() {
       onChange={event => setSearchText(event.target.value)}/>
   </div>
 
-    <Table grantArray={interactiveData} sortDirection={sortDirection} onSort={toggleProjectTitleSort}/>
+    <Table grantArray={interactiveData} sortDirection={sortDirection} sortDirectionYear={sortDirectionYear} onSort={toggleProjectTitleSort} onYearSort={toggleYearSort}/>
       </>
 
   );
