@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap');
+
 *,
 *::before *::after {
   box-sizing: border-box;
@@ -113,10 +115,12 @@ th.sortable:hover {
 .controls::before{
   display: flex;
   content: "Grant Data";
-  font-size: 20pt;
-  font-weight: bold;
+  font-size: 25pt;
+  font-weight: 500;
   align-self: center;
   justify-content: flex-start;
+  font-family: "Bitcount Single", system-ui;
+
 }
 
 .controls {
