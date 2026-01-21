@@ -28,6 +28,7 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
   return(
 
     <>
+        <div classname = "table-container">
         <title>Grant Table</title>
         <table>
           <thead className="Header">
@@ -56,6 +57,7 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
           {console.log(grantArray)}
           </tbody>
         </table>
+        </div>
       
   </>
   );
