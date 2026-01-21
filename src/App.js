@@ -66,6 +66,7 @@ function App() {
    fetchGrant();
   },[])
   let interactiveData=[...Grant]
+  //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
 
   //Check for the filters through the drop down.
@@ -73,9 +74,10 @@ function App() {
     {
     interactiveData= Grant.filter(data => data.InstState === filterState)
     }
+  // Check for any changes in the search option for universities
     if (searchText.trim() !== "") {
     interactiveData = Grant.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
-}
+    }
 
   return (<>
     <select
