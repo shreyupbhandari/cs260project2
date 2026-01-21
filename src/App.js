@@ -112,6 +112,7 @@ function App() {
 });
 
   return (<>
+  <div className="controls">
     <select
       value={filterState}
       onChange={event => setfilterState(event.target.value)}>
@@ -122,7 +123,7 @@ function App() {
       placeholder="Search University"
       value={searchText}
       onChange={event => setSearchText(event.target.value)}/>
-
+  </div>
 
     <Table grantArray={interactiveData} sortDirection={sortDirection} onSort={toggleProjectTitleSort}/>
       </>

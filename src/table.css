@@ -87,3 +87,49 @@ th.sortable:hover {
   font-size: 0.7rem;
   opacity: 0.7;
 }
+
+.controls {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0;
+  align-items: center;
+}
+
+.controls select {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.controls select:hover {
+  border-color: #888;
+}
+
+.controls select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.controls input {
+  padding: 10px 14px;
+  font-size: 14px;
+  width: 260px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.controls input::placeholder {
+  color: #999;
+}
+
+.controls input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
