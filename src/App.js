@@ -61,10 +61,6 @@ function App() {
   const [searchText,setSearchText]= useState("");
   const [sortDirection, setSortDirection] = useState(null);
 
-  function toggleProjectTitleSort()
-   {setSortDirection(prev => 
-    prev === "asc" ? "desc" : "asc");}
-
   useEffect(()=>{
     async function fetchGrant() {
       const url="/NEH2020sGrant_Short.json";
@@ -75,20 +71,23 @@ function App() {
    fetchGrant();
   },[])
   let interactiveData= [...Grant]
+  function toggleProjectTitleSort()
+   {setSortDirection(prev => 
+    prev === "asc" ? "desc" : "asc");}
   //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
 
   //Check for the filters through the drop down.
   if (filterState !== "ALL") 
     {
-    interactiveData= Grant.filter(data => data.InstState === filterState)
+    interactiveData= interactiveData.filter(data => data.InstState === filterState)
     }
   // Check for any changes in the search option for universities
     if (searchText.trim() !== "") {
-    interactiveData = Grant.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
+    interactiveData = interactiveData.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
     }
   //Sorting
-    interactiveData = [...Grant].sort((a, b) => {
+    interactiveData = [...interactiveData].sort((a, b) => {
   if (!sortDirection) 
     {return 0;} //If no sort direction is specified, do not sort
 
