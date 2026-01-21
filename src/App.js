@@ -155,11 +155,11 @@ function App() {
 
   return (<>
   <div className="controls">
-    <select
-      value={filterState}
-      onChange={event => setfilterState(event.target.value)}>
-      {states.map(state => <option key={state} value={state}>{state}</option>)}
-    </select>
+    
+    <input
+      placeholder="Search University"
+      value={searchText}
+      onChange={event => setSearchText(event.target.value)}/>
 
     <select
       value={filterPrograms}
@@ -167,12 +167,12 @@ function App() {
       {programs.map(program => <option key={program} value={program}>{program}</option>)}
     </select>
   
+    <select
+      value={filterState}
+      onChange={event => setfilterState(event.target.value)}>
+      {states.map(state => <option key={state} value={state}>{state}</option>)}
+    </select>
   
-
-    <input
-      placeholder="Search University"
-      value={searchText}
-      onChange={event => setSearchText(event.target.value)}/>
   </div>
 
     <Table grantArray={interactiveData} sortDirection={sortDirection} sortDirectionYear={sortDirectionYear} onSort={toggleProjectTitleSort} onYearSort={toggleYearSort}/>
