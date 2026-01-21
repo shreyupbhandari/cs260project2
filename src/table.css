@@ -110,6 +110,15 @@ th.sortable:hover {
   opacity: 0.7;
 }
 
+.controls::before{
+  display: flex;
+  content: "Grant Data";
+  font-size: 20pt;
+  font-weight: bold;
+  align-self: center;
+  justify-content: flex-start;
+}
+
 .controls {
   display: flex;
   gap: 16px;
