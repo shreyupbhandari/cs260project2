@@ -28,7 +28,6 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
   return(
 
     <>
-        <div classname = "table-container">
         <title>Grant Table</title>
         <table>
           <thead className="Header">
@@ -38,6 +37,7 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
               <span className="sort-icon">
                 {sortDirection === "asc" && "▲"}
                 {sortDirection === "desc" && "▼"}
+                {sortDirection === null && "▲▼"}
               </span>
               </th>
               <th>Institution</th>
@@ -48,6 +48,7 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
               <span className="sort-icon">
                 {sortDirectionYear === "asc" && "▲"}
                 {sortDirectionYear === "desc" && "▼"}
+                {sortDirectionYear === null && "▲▼"}
               </span>
               </th>
             </tr>
@@ -57,7 +58,6 @@ function Table({grantArray,sortDirection, sortDirectionYear, onSort,onYearSort})
           {console.log(grantArray)}
           </tbody>
         </table>
-        </div>
       
   </>
   );
@@ -74,7 +74,7 @@ function App() {
 
   useEffect(()=>{
     async function fetchGrant() {
-      const url="/NEH2020sGrant_Short.json";
+      const url="/NEH2020sGrant.json";
       const response = await fetch(url);
       const result = await response.json();
       setGrant(result.Grants.Grant);
@@ -83,11 +83,9 @@ function App() {
   },[])
   let interactiveData= [...Grant]
   function toggleProjectTitleSort()
-   {setSortDirection(prev => 
-    prev === "asc" ? "desc" : "asc");}
+   {setSortDirection(prev => prev === "asc" ? "desc" : prev === "desc" ? null : "asc");}
   function toggleYearSort()
-   {setSortDirectionYear(prev => 
-    prev === "asc" ? "desc" : "asc");}
+   {setSortDirectionYear(prev =>  prev === "asc" ? "desc" : prev === "desc" ? null : "asc");}
   //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
   const programs= ["ALL",...new Set((Grant.map(grant => grant.Program)))];
