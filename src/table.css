@@ -71,3 +71,21 @@ tbody tr:hover{
     font-style: italic;
     font-weight: 500;
 }
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+th.sortable:hover {
+  color: #2563eb;
+}
+
+.sort-icon {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}

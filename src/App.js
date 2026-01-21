@@ -21,7 +21,7 @@ function TableRow({grantData,index})
 
 }
 
-function Table({grantArray})
+function Table({grantArray,sortDirection,onSort})
 {
 
   return(
@@ -32,7 +32,12 @@ function Table({grantArray})
           <thead className="Header">
             <tr>
               <th>SN</th>
-              <th>Project Title</th>
+              <th className="sortable" onClick={onSort}><span>Project Title</span>
+              <span className="sort-icon">
+                {sortDirection === "asc" && "▲"}
+                {sortDirection === "desc" && "▼"}
+              </span>
+              </th>
               <th>Institution</th>
               <th>Program</th>
               <th>State</th>
@@ -54,7 +59,11 @@ function App() {
   const [Grant, setGrant]=useState([]);
   const [filterState, setfilterState] = useState("ALL");
   const [searchText,setSearchText]= useState("");
+  const [sortDirection, setSortDirection] = useState(null);
 
+  function toggleProjectTitleSort()
+   {setSortDirection(prev => 
+    prev === "asc" ? "desc" : "asc");}
 
   useEffect(()=>{
     async function fetchGrant() {
@@ -65,7 +74,7 @@ function App() {
     }
    fetchGrant();
   },[])
-  let interactiveData=[...Grant]
+  let interactiveData= [...Grant]
   //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
 
@@ -78,6 +87,30 @@ function App() {
     if (searchText.trim() !== "") {
     interactiveData = Grant.filter(data =>data.Institution.toLowerCase().includes(searchText.toLowerCase()));
     }
+  //Sorting
+    interactiveData = [...Grant].sort((a, b) => {
+  if (!sortDirection) 
+    {return 0;} //If no sort direction is specified, do not sort
+
+  else if (sortDirection === "asc") {
+    if (a.ProjectTitle < b.ProjectTitle) 
+      {return -1;}
+    if (a.ProjectTitle > b.ProjectTitle) 
+      {return 1;}
+    else
+      {return 0;}
+      // Ascending order
+  }
+  else if (sortDirection==="desc") // Descending order
+    {
+      if (a.ProjectTitle < b.ProjectTitle) 
+        {return 1;}
+      if (a.ProjectTitle > b.ProjectTitle) 
+        {return -1;}
+      else
+        {return 0;}
+    }
+});
 
   return (<>
     <select
@@ -92,7 +125,7 @@ function App() {
       onChange={event => setSearchText(event.target.value)}/>
 
 
-    <Table grantArray={interactiveData}/>
+    <Table grantArray={interactiveData} sortDirection={sortDirection} onSort={toggleProjectTitleSort}/>
       </>
 
   );
