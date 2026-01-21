@@ -68,6 +68,7 @@ function App() {
   const [searchText,setSearchText]= useState("");
   const [sortDirection, setSortDirection] = useState(null);
   const [sortDirectionYear,setSortDirectionYear]= useState(null);
+  const [filterPrograms, setfilterPrograms] = useState("ALL");
 
   useEffect(()=>{
     async function fetchGrant() {
@@ -87,11 +88,17 @@ function App() {
     prev === "asc" ? "desc" : "asc");}
   //To create dropdown options for states; the set function ensures that there are no duplicates
   const states= ["ALL",...new Set((Grant.map(grant => grant.InstState)))];
+  const programs= ["ALL",...new Set((Grant.map(grant => grant.Program)))];
 
   //Check for the filters through the drop down.
   if (filterState !== "ALL") 
     {
     interactiveData= interactiveData.filter(data => data.InstState === filterState)
+    };
+  //Check for the program filter through the drop down.
+  if (filterPrograms !== "ALL") 
+    {
+    interactiveData= interactiveData.filter(data => data.Program === filterPrograms)
     }
   // Check for any changes in the search option for universities
     if (searchText.trim() !== "") {
@@ -153,6 +160,14 @@ function App() {
       onChange={event => setfilterState(event.target.value)}>
       {states.map(state => <option key={state} value={state}>{state}</option>)}
     </select>
+
+    <select
+      value={filterPrograms}
+      onChange={event => setfilterPrograms(event.target.value)}>
+      {programs.map(program => <option key={program} value={program}>{program}</option>)}
+    </select>
+  
+  
 
     <input
       placeholder="Search University"
