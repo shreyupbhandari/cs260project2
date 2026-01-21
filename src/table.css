@@ -120,7 +120,9 @@ th.sortable:hover {
   align-self: center;
   justify-content: flex-start;
   font-family: "Bitcount Single", system-ui;
-
+  margin-top: 20px;
+  text-align: left;
+  padding-right: 50PX;
 }
 
 .controls {
